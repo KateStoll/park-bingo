@@ -1,13 +1,34 @@
-import MapPlaceholder from "./components/MapPlaceholder";
-import BingoBoard from "./components/BingoBoard";
-import CheckInModal from "./components/CheckInModal";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import BingoBoard from "./components/BingoBoard";
+
+export default function HomePage() {
+  const [items] = useState([
+    "State Park",
+    "National Park",
+    "Trailhead",
+    "Waterfall",
+    "Scenic Overlook"
+  ]);
+
+  const [checkedInItems, setCheckedInItems] = useState<string[]>([]);
+
+  function handleCheckIn(item: string) {
+    if (!checkedInItems.includes(item)) {
+      setCheckedInItems([...checkedInItems, item]);
+    }
+  }
+
   return (
-    <div className="space-y-6">
-      <MapPlaceholder />
-      <BingoBoard />
-      <CheckInModal />
-    </div>
+    <main>
+      <h1>Park Bingo</h1>
+
+      <BingoBoard
+        items={items}
+        checkedInItems={checkedInItems}
+        onCheckIn={handleCheckIn}
+      />
+    </main>
   );
 }
